@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <script src = "script.js">
+    <script src = "script.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
 		<title>Pause Game</title>
 	</head>
@@ -14,5 +14,61 @@
 		<!--<button id = "pause" onclick = "restart()">RESTART</button>-->
 		<br><br>
 		<h2 id = "status" onclick = "restart()"></h2>
+
+		<script>
+			var numberText = document.getElementById ("number");
+var number = 0;
+var shouldcountup = true;
+var shouldcount = true;
+var targetnumber = Math.floor(Math.random () * 30);
+var statusW = document.getElementById ("status");
+
+document.getElementById ("targetNumber").innerHTML = targetnumber;
+
+var interval = setInterval (function () {
+    if (number < 30 && shouldcountup && shouldcount) {
+        numberText.innerHTML = number++;
+        if (number==30) {
+            shouldcountup=false;
+        }
+    } else if (!shouldcountup && shouldcount) {
+        numberText.innerHTML = number--;
+        if (number==0) {
+            shouldcountup=true;
+        }
+    } 
+}, 200)
+
+function stop () {
+    shouldcount=false;
+    
+    if (parseFloat(numberText.innerHTML) == targetnumber) {
+        statusW.innerHTML = "You win!"
+    } else {
+        statusW.innerHTML = "You lose!"
+    }
+}
+
+function restart () {
+    statusW.innerHTML="";
+    
+    number=0;
+    numberText.innerHTML=number;
+
+    targetnumber = Math.floor(Math.random () * 30);
+    document.getElementById ("targetNumber").innerHTML = targetnumber;
+
+    shouldcount=true;
+    shouldcountup=true;
+}
+
+document.addEventListener('keypress', function(event) {
+    if (event.code === 'Space') {
+        stop();
+    } else if (event.code === "KeyR") {
+        restart();
+    }
+});
+		</script>
 	</body>
 </html>
